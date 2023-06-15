@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="todayPlanViewModel"
+            type="com.example.baicizhan.vm.TodayPlanViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ZhanActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/needLearn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{"剩余 " + String.valueOf(todayPlanViewModel.currentWordResource + 1)}' />
+
+                <TextView
+                    android:id="@+id/needReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{"正确 " + String.valueOf(todayPlanViewModel.continuousCorrect)}' />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/just_learned_word"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{todayPlanViewModel.lastWordResource.word}" />
+
+                <TextView
+                    android:id="@+id/just_learned_word_mean"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{todayPlanViewModel.lastWordResource.shortMean}" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/current_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"
+                    android:text="@{todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].getWordOnSpace()}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+<!--                <TextView-->
+<!--                    android:id="@+id/current_word_mean"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingLeft="20dp"-->
+<!--                    android:paddingRight="20dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:text="@{todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].shortMean}" />-->
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:context=".ZhanActivity"
+                    tools:ignore="MissingConstraints"
+                    android:orientation="vertical">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/choice_a"
+                            android:layout_width="match_parent"
+                            android:layout_height="0px"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/a"
+                            app:media="@{todayPlanViewModel.choiceWordResourceArray[0].image}"
+                            app:word="@{todayPlanViewModel.choiceWordResourceArray[0].word}"
+                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[0].word)}"
+                            app:layout_constraintDimensionRatio="16:9" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/short_mean_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"
+                        android:text='@{todayPlanViewModel.choiceWordResourceArray[0].shortMean}'
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:context=".ZhanActivity"
+                    tools:ignore="MissingConstraints"
+                    android:orientation="vertical">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/choice_b"
+                            android:layout_width="match_parent"
+                            android:layout_height="0px"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/clock"
+                            app:media="@{todayPlanViewModel.choiceWordResourceArray[1].image}"
+                            app:word="@{todayPlanViewModel.choiceWordResourceArray[1].word}"
+                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[1].word)}"
+                            app:layout_constraintDimensionRatio="16:9" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/short_mean_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"
+                        android:text='@{todayPlanViewModel.choiceWordResourceArray[1].shortMean}'
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:context=".ZhanActivity"
+                    tools:ignore="MissingConstraints"
+                    android:orientation="vertical">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/choice_c"
+                            android:layout_width="match_parent"
+                            android:layout_height="0px"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/c"
+                            app:media="@{todayPlanViewModel.choiceWordResourceArray[2].image}"
+                            app:word="@{todayPlanViewModel.choiceWordResourceArray[2].word}"
+                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[2].word)}"
+                            app:layout_constraintDimensionRatio="16:9" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/short_mean_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"
+                        android:text='@{todayPlanViewModel.choiceWordResourceArray[2].shortMean}'
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:context=".ZhanActivity"
+                    tools:ignore="MissingConstraints"
+                    android:orientation="vertical">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/choice_d"
+                            android:layout_width="match_parent"
+                            android:layout_height="0px"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/d"
+                            app:media="@{todayPlanViewModel.choiceWordResourceArray[3].image}"
+                            app:word="@{todayPlanViewModel.choiceWordResourceArray[3].word}"
+                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[3].word)}"
+                            app:layout_constraintDimensionRatio="16:9" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/short_mean_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"
+                        android:text='@{todayPlanViewModel.choiceWordResourceArray[3].shortMean}'
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/zhan"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:stateListAnimator="@null"
+                android:text="斩" />
+
+            <Button
+                android:id="@+id/pronounce"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:stateListAnimator="@null"
+                android:onClick="@{() -> todayPlanViewModel.forcePlayWord(todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].word)}"
+                android:text="发音" />
+        </LinearLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
