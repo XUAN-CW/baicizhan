@@ -3,6 +3,7 @@ package com.example.baicizhan
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -11,7 +12,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.baicizhan.database.BaicizhanDatabase
 import com.example.baicizhan.entity.WordResource
-import com.example.baicizhan.util.PathUtil
+import com.example.baicizhan.util.BaicizhanPathUtil
+import com.example.baicizhan.util.WordResourceDirPathUtil
 import com.google.gson.Gson
 import org.apache.commons.io.FileUtils
 import org.apache.commons.lang3.ArrayUtils
@@ -22,7 +24,9 @@ import org.eclipse.jgit.lib.ObjectId
 import org.eclipse.jgit.lib.TextProgressMonitor
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import java.io.File
+import java.time.LocalDate
 import java.util.ArrayList
+import java.util.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,13 +36,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        PathUtil.init(filesDir)
 
+
+
+        BaicizhanPathUtil.init(applicationContext)
         downloadProgressTextView = findViewById(R.id.baicizhan_resource_root_dir)
-        downloadProgressTextView.setText(PathUtil.getBaicizhanResourceRootDir().absolutePath)
+        downloadProgressTextView.text = BaicizhanPathUtil.getWordResourceRootDir().absolutePath
 
         findViewById<Button>(R.id.pullGitRepository).setOnClickListener{
-            Thread { cloneRepository(PathUtil.cloneUrl,PathUtil.getGitRepositoryDir()) }.start()
+            Thread { cloneRepository(BaicizhanPathUtil.cloneUrl,BaicizhanPathUtil.getGitRepositoryDir()) }.start()
         }
         findViewById<Button>(R.id.deleteGitRepository).setOnClickListener{
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -47,10 +53,10 @@ class MainActivity : AppCompatActivity() {
                 .setPositiveButton(
                     "Delete"
                 ) { dialog, which -> // Perform the deletion action here
-                    FileUtils.deleteDirectory(PathUtil.getGitRepositoryDir())
+                    FileUtils.deleteDirectory(BaicizhanPathUtil.getGitRepositoryDir())
                     Toast.makeText(
                         this,
-                        "delete " + PathUtil.getGitRepositoryDir(),
+                        "delete " + BaicizhanPathUtil.getGitRepositoryDir(),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -71,25 +77,9 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun scanWordResourceDir(){
-        val wordResourceList = ArrayList<WordResource>()
-        for (wordDir in PathUtil.getWordResourceDirList()) {
-            Log.i("scanWordResourceDir",wordDir.absolutePath)
-            if(PathUtil.getWordDataFile(wordDir.name).exists()){
-                val wordResource : WordResource = Gson().fromJson((PathUtil.getWordDataFile(wordDir.name)).reader(), WordResource::class.java)
-                val  mediaArray = wordDir.listFiles {file -> file.isFile
-                        && (file.name.endsWith(".jpg"))
-                        || (file.name.endsWith(".jpeg")
-                        || file.name.endsWith(".png"))
-                        || file.name.endsWith(".gif")
-                        || file.name.endsWith(".mp4") }
-                if(ArrayUtils.isNotEmpty(mediaArray)){
-                    if (mediaArray != null) {
-                        wordResource.image = mediaArray.toList().sorted()[0]?.absolutePath
-                    }
-                }
-                wordResourceList.add(wordResource)
-            }
-        }
+        Log.i("scanWordResourceDir","scanWordResourceDir")
+
+        val wordResourceList = WordResourceDirPathUtil.getWordResourceList(BaicizhanPathUtil.getWordResourceRootDir())
         val baicizhanDatabase = BaicizhanDatabase.getInstance(this)
         for (wordResource in baicizhanDatabase.wordResourceDao().getAllWordResource()) {
             Log.i("check wordResource",wordResource.word)
@@ -97,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
         for (wordResource in wordResourceList) {
             try {
+                Log.i("scanWordResourceDir",wordResource.wordResourceDir.toString())
                 baicizhanDatabase.wordResourceDao().insert(wordResource)
             }catch (e : android.database.sqlite.SQLiteConstraintException){
 

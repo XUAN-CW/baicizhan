@@ -10,7 +10,6 @@ import com.example.baicizhan.R
 import com.example.baicizhan.database.BaicizhanDatabase
 import com.example.baicizhan.entity.WordResource
 import com.example.baicizhan.player.Mp3Player
-import com.example.baicizhan.util.PathUtil
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import java.util.Random
 
@@ -48,14 +47,14 @@ class TodayPlanViewModel(application: Application) : AndroidViewModel(applicatio
         currentWordResource = MutableLiveData(wordResourceArray.size - 1)
         if(wordResourceArray.isNotEmpty()){
             currentWordResource.observeForever {value ->
-                mp3Player.playMp3(Uri.parse(wordResourceArray[value].getUsSpeechFile().absolutePath))
+                mp3Player.playMp3(Uri.parse(wordResourceArray[value].usSpeechFile))
                 setChoiceWordResourceListCurrentWordResource()
             }
         }
     }
 
-    fun forcePlayWord(word: String){
-        mp3Player.forcePlayMp3(Uri.fromFile(PathUtil.getUsSpeechFile(word)))
+    fun forcePlayWord(usSpeechFile: String){
+        mp3Player.forcePlayMp3(Uri.parse(usSpeechFile))
     }
 
     private fun setChoiceWordResourceListCurrentWordResource() {

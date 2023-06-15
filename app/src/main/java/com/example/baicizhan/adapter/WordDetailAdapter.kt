@@ -35,12 +35,10 @@ class WordDetailAdapter(private val wordResources: List<WordResource>) :
 
         fun bind(wordResource: WordResource) {
             wordTextView.setOnClickListener{
-                Log.i("shortMeanTextView",wordResource.getUsSpeechFile().absolutePath)
-                mp3Player.forcePlayMp3(Uri.fromFile(wordResource.getUsSpeechFile()))
+                mp3Player.forcePlayMp3(Uri.parse(wordResource.usSpeechFile))
             }
             usphoneTextView.setOnClickListener{
-                Log.i("shortMeanTextView",wordResource.getUsSpeechFile().absolutePath)
-                mp3Player.forcePlayMp3(Uri.fromFile(wordResource.getUsSpeechFile()))
+                mp3Player.forcePlayMp3(Uri.parse(wordResource.usSpeechFile))
             }
 
             binding.wordResource = wordResource

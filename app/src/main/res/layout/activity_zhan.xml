@@ -269,7 +269,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:stateListAnimator="@null"
-                android:onClick="@{() -> todayPlanViewModel.forcePlayWord(todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].word)}"
+                android:onClick="@{() -> todayPlanViewModel.forcePlayWord(todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].usSpeechFile)}"
                 android:text="发音" />
         </LinearLayout>
 

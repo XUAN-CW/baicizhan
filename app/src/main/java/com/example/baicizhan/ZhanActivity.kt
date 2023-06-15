@@ -14,7 +14,6 @@ import com.example.baicizhan.constaint.Constaints
 import com.example.baicizhan.database.BaicizhanDatabase
 import com.example.baicizhan.databinding.ActivityZhanBinding
 import com.example.baicizhan.entity.WordResource
-import com.example.baicizhan.util.PathUtil
 import com.example.baicizhan.vm.TodayPlanViewModel
 import com.google.gson.Gson
 import org.apache.commons.lang3.ArrayUtils
