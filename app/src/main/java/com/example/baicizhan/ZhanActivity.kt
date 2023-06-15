@@ -28,7 +28,6 @@ class ZhanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_zhan)
-        scanWordResourceDir()
 
         // 构造 todayPlanViewModel
         todayPlanViewModel = ViewModelProvider(this).get(TodayPlanViewModel::class.java)
@@ -51,40 +50,6 @@ class ZhanActivity : AppCompatActivity() {
         activityZhanBinding.todayPlanViewModel = todayPlanViewModel
         activityZhanBinding.lifecycleOwner = this
         gestureDetector = GestureDetector(this, MyGestureListener())
-    }
-
-    private fun scanWordResourceDir(){
-        val wordResourceList = ArrayList<WordResource>()
-        for (wordDir in PathUtil.getWordResourceDirList()) {
-            Log.i("scanWordResourceDir",wordDir.absolutePath)
-            if(PathUtil.getWordDataFile(wordDir.name).exists()){
-                val wordResource : WordResource = Gson().fromJson((PathUtil.getWordDataFile(wordDir.name)).reader(), WordResource::class.java)
-                val  mediaArray = wordDir.listFiles {file -> file.isFile
-                        && (file.name.endsWith(".jpg"))
-                        || (file.name.endsWith(".jpeg")
-                        || file.name.endsWith(".png"))
-                        || file.name.endsWith(".gif")
-                        || file.name.endsWith(".mp4") }
-                if(ArrayUtils.isNotEmpty(mediaArray)){
-                    if (mediaArray != null) {
-                        wordResource.image = mediaArray.toList().sorted()[0]?.absolutePath
-                    }
-                }
-                wordResourceList.add(wordResource)
-            }
-        }
-        val baicizhanDatabase = BaicizhanDatabase.getInstance(this)
-        for (wordResource in baicizhanDatabase.wordResourceDao().getAllWordResource()) {
-            Log.i("check wordResource",wordResource.word)
-            baicizhanDatabase.wordResourceDao().delete(wordResource)
-        }
-        for (wordResource in wordResourceList) {
-            try {
-                baicizhanDatabase.wordResourceDao().insert(wordResource)
-            }catch (e : android.database.sqlite.SQLiteConstraintException){
-
-            }
-        }
     }
 
 

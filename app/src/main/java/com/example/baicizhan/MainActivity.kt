@@ -3,13 +3,18 @@ package com.example.baicizhan
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.baicizhan.database.BaicizhanDatabase
+import com.example.baicizhan.entity.WordResource
 import com.example.baicizhan.util.PathUtil
+import com.google.gson.Gson
 import org.apache.commons.io.FileUtils
+import org.apache.commons.lang3.ArrayUtils
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.api.PullCommand
 import org.eclipse.jgit.api.ResetCommand
@@ -17,6 +22,7 @@ import org.eclipse.jgit.lib.ObjectId
 import org.eclipse.jgit.lib.TextProgressMonitor
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import java.io.File
+import java.util.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -54,10 +60,47 @@ class MainActivity : AppCompatActivity() {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
         }
 
+        findViewById<Button>(R.id.scanWordResource).setOnClickListener{ scanWordResourceDir() }
+
         val doTodayPlanButton = findViewById<Button>(R.id.doTodayPlan)
         doTodayPlanButton.setOnClickListener {
             val intent = Intent(this@MainActivity, ZhanActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+
+    private fun scanWordResourceDir(){
+        val wordResourceList = ArrayList<WordResource>()
+        for (wordDir in PathUtil.getWordResourceDirList()) {
+            Log.i("scanWordResourceDir",wordDir.absolutePath)
+            if(PathUtil.getWordDataFile(wordDir.name).exists()){
+                val wordResource : WordResource = Gson().fromJson((PathUtil.getWordDataFile(wordDir.name)).reader(), WordResource::class.java)
+                val  mediaArray = wordDir.listFiles {file -> file.isFile
+                        && (file.name.endsWith(".jpg"))
+                        || (file.name.endsWith(".jpeg")
+                        || file.name.endsWith(".png"))
+                        || file.name.endsWith(".gif")
+                        || file.name.endsWith(".mp4") }
+                if(ArrayUtils.isNotEmpty(mediaArray)){
+                    if (mediaArray != null) {
+                        wordResource.image = mediaArray.toList().sorted()[0]?.absolutePath
+                    }
+                }
+                wordResourceList.add(wordResource)
+            }
+        }
+        val baicizhanDatabase = BaicizhanDatabase.getInstance(this)
+        for (wordResource in baicizhanDatabase.wordResourceDao().getAllWordResource()) {
+            Log.i("check wordResource",wordResource.word)
+            baicizhanDatabase.wordResourceDao().delete(wordResource)
+        }
+        for (wordResource in wordResourceList) {
+            try {
+                baicizhanDatabase.wordResourceDao().insert(wordResource)
+            }catch (e : android.database.sqlite.SQLiteConstraintException){
+
+            }
         }
     }
 
