@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.File
+import java.time.LocalDateTime
+
 @Entity(tableName = "word_resource")
 data class WordResource (
     @PrimaryKey
@@ -16,8 +18,8 @@ data class WordResource (
     @ColumnInfo(name = "mean_list")  val meanList: List<String>?,
     var image: String?,
     val prototype: String?,
-    var createTime : String?,
-    var updateTime : String?
+    var createTime : LocalDateTime?,
+    var updateTime : LocalDateTime?
 
 ){
     fun getWordDir() : File? {
