@@ -1,10 +1,8 @@
 package com.example.baicizhan.entity
 
-import android.text.TextUtils
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.File
+
 @Entity(tableName = "learning_record")
 data class LearningRecord (
     @PrimaryKey
@@ -17,4 +15,13 @@ data class LearningRecord (
      * 是否正确
      */
     var right: Int
-)
+){
+
+    enum class Event(private val cn: String) {
+        LOOK_AT_THE_PICTURE_AND_CHOOSE_THE_WORDS("看图选词");
+
+        override fun toString(): String {
+            return cn
+        }
+    }
+}
