@@ -16,10 +16,13 @@ import com.example.baicizhan.dao.LearningRecordDao
 import com.example.baicizhan.dao.WordResourceDao
 import com.example.baicizhan.database.BaicizhanDatabase
 import com.example.baicizhan.databinding.ActivityZhanBinding
+import com.example.baicizhan.entity.LearningRecord
 import com.example.baicizhan.entity.WordResource
 import com.example.baicizhan.player.Mp3Player
+import com.example.baicizhan.util.IdUtil
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.gson.Gson
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -90,6 +93,8 @@ class TodayPlanActivity : AppCompatActivity() {
     fun choice(word: String) {
         Log.i("choice", word)
         if (wordResourceArray[currentWordResource.value!!].word == word) {
+            learningRecordDao.insert(LearningRecord(IdUtil.generateLongId(),word, LocalDateTime.now(),
+                LearningRecord.Event.LOOK_AT_THE_PICTURE_AND_CHOOSE_THE_WORD.toString(),1))
             mp3Player.forcePlayMp3(RawResourceDataSource.buildRawResourceUri(R.raw.rightanswer))
             if(currentWordResource.value!! > 0){
                 lastWordResource.value = wordResourceArray[currentWordResource.value!!]
@@ -107,6 +112,9 @@ class TodayPlanActivity : AppCompatActivity() {
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN)
             }
         }else{
+
+            learningRecordDao.insert(LearningRecord(IdUtil.generateLongId(),word, LocalDateTime.now(),
+                LearningRecord.Event.LOOK_AT_THE_PICTURE_AND_CHOOSE_THE_WORD.toString(),0))
             continuousCorrect.value = 0
         }
     }
