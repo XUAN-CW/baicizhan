@@ -9,7 +9,7 @@ public class BaicizhanPathUtil {
 
     private static File wordResourceRootDir = null;
     private static File gitRepositoryDir = null;
-    public static final String cloneUrl = "https://github.com/XUAN-CW/baicizhan";
+    public static final String cloneUrl = "https://github.com/XUAN-CW/baicizhan-data";
     private static File databaseFile = null;
 
 
