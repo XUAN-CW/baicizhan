@@ -2,14 +2,14 @@ package com.example.baicizhan.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDateTime
 
 @Entity(tableName = "learning_record")
 data class LearningRecord (
     @PrimaryKey
     var id: Long,
     var word: String,
-    var createTime : String,
-    var updateTime : String,
+    var createTime : LocalDateTime,
     var event: String,
     /**
      * 是否回答正确
