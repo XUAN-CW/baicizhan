@@ -10,7 +10,6 @@ import java.io.File;
 public class BaicizhanPathUtil {
 
     private static File wordResourceRootDir = null;
-    private static File learningRecord = null;
     private static File databaseFile = null;
 
 
