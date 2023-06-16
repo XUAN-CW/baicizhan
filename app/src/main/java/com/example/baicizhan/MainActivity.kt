@@ -31,19 +31,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, TodayPlanActivity::class.java)
             startActivity(intent)
         }
-
-        var a =LearningRecord(IdUtil.generateLongId(),"KK", LocalDateTime.now(),
-            LearningRecord.Event.LOOK_AT_THE_PICTURE_AND_CHOOSE_THE_WORD.toString(),0);
-
-        val learningRecordDao = BaicizhanDatabase.getInstance(this).learningRecordDao()
-
-        learningRecordDao.insert(a)
-
-        for (learningRecord in learningRecordDao.getAllLearningRecord()) {
-            Log.i("learningRecord",learningRecord.createTime.toString())
-        }
-
-
     }
 
 
