@@ -6,7 +6,7 @@
     <data>
         <variable
             name="todayPlanViewModel"
-            type="com.example.baicizhan.vm.TodayPlanViewModel" />
+            type="com.example.baicizhan.ZhanActivity" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat

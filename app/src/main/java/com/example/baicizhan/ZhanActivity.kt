@@ -2,6 +2,7 @@ package com.example.baicizhan
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
@@ -9,12 +10,15 @@ import android.view.MotionEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.baicizhan.constaint.Constaints
 import com.example.baicizhan.database.BaicizhanDatabase
 import com.example.baicizhan.databinding.ActivityZhanBinding
 import com.example.baicizhan.entity.WordResource
+import com.example.baicizhan.player.Mp3Player
 import com.example.baicizhan.vm.TodayPlanViewModel
+import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.gson.Gson
 import org.apache.commons.lang3.ArrayUtils
 import java.io.Serializable
@@ -22,18 +26,36 @@ import java.util.*
 
 
 class ZhanActivity : AppCompatActivity() {
-    private lateinit var todayPlanViewModel: TodayPlanViewModel
+//    private lateinit var todayPlanViewModel: TodayPlanViewModel
+
+    var choiceWordResourceArray: MutableLiveData<Array<WordResource>> = MutableLiveData()
+    var lastWordResource: MutableLiveData<WordResource> = MutableLiveData()
+    lateinit var wordResourceArray: Array<WordResource>
+    var currentWordResource : MutableLiveData<Int> = MutableLiveData(0)
+    var continuousCorrect : MutableLiveData<Int> = MutableLiveData(0)
+
+    var isComplete : MutableLiveData<Boolean> = MutableLiveData(false)
+
+    private lateinit var mp3Player : Mp3Player
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_zhan)
 
+        // 绑定
+        val activityZhanBinding: ActivityZhanBinding = DataBindingUtil.setContentView(this, R.layout.activity_zhan)
+        activityZhanBinding.todayPlanViewModel = this
+        activityZhanBinding.lifecycleOwner = this
+        gestureDetector = GestureDetector(this, MyGestureListener())
+
+
+
         // 构造 todayPlanViewModel
-        todayPlanViewModel = ViewModelProvider(this).get(TodayPlanViewModel::class.java)
-        todayPlanViewModel.isComplete.observe(this) { isComplete ->
+//        todayPlanViewModel = ViewModelProvider(this).get(TodayPlanViewModel::class.java)
+        isComplete.observe(this) { isComplete ->
             if (isComplete) {
                 val dialogBuilder = AlertDialog.Builder(this)
-                val dialog = dialogBuilder.setMessage("全部完成！"+ (todayPlanViewModel.continuousCorrect.value?.plus(1)) +"连击！")
+                val dialog = dialogBuilder.setMessage("全部完成！"+ (continuousCorrect.value?.plus(1)) +"连击！")
                     .setCancelable(false)
                     .setPositiveButton("Yes") { dialog, id ->
                         // User clicked Yes button
@@ -44,14 +66,50 @@ class ZhanActivity : AppCompatActivity() {
             }
         }
 
-        // 绑定
-        val activityZhanBinding: ActivityZhanBinding = DataBindingUtil.setContentView(this, R.layout.activity_zhan)
-        activityZhanBinding.todayPlanViewModel = todayPlanViewModel
-        activityZhanBinding.lifecycleOwner = this
-        gestureDetector = GestureDetector(this, MyGestureListener())
+        mp3Player = Mp3Player(application)
+        wordResourceArray = BaicizhanDatabase.getInstance(application).wordResourceDao().getAllWordResource().shuffled().toTypedArray()
+        currentWordResource = MutableLiveData(wordResourceArray.size - 1)
+        if(wordResourceArray.isNotEmpty()){
+            currentWordResource.observeForever {value ->
+                mp3Player.playMp3(Uri.parse(wordResourceArray[value].usSpeechFile))
+                setChoiceWordResourceListCurrentWordResource()
+            }
+        }
     }
 
 
+    fun forcePlayWord(usSpeechFile: String){
+        mp3Player.forcePlayMp3(Uri.parse(usSpeechFile))
+    }
+
+    private fun setChoiceWordResourceListCurrentWordResource() {
+        val fourWordResource = wordResourceArray.copyOf().toList().shuffled().take(4).toTypedArray()
+
+        for (wordResource in fourWordResource) {
+            if(wordResource.word == wordResourceArray[currentWordResource.value!!].word){
+                choiceWordResourceArray.value = fourWordResource
+                return
+            }
+        }
+        fourWordResource[Random().nextInt(3)] = wordResourceArray[currentWordResource.value!!]
+        choiceWordResourceArray.value = fourWordResource
+    }
+
+    fun choice(word: String) {
+        Log.i("choice", word)
+        if (wordResourceArray[currentWordResource.value!!].word == word) {
+            mp3Player.forcePlayMp3(RawResourceDataSource.buildRawResourceUri(R.raw.rightanswer))
+            if(currentWordResource.value!! > 0){
+                lastWordResource.value = wordResourceArray[currentWordResource.value!!]
+                currentWordResource.value = currentWordResource.value!! - 1
+                continuousCorrect.value = continuousCorrect.value!! + 1
+            }else{
+                isComplete.value = true
+            }
+        }else{
+            continuousCorrect.value = 0
+        }
+    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event)
@@ -71,8 +129,8 @@ class ZhanActivity : AppCompatActivity() {
             }
             if (event2.rawY - event1.rawY > 100) {
                 Log.i("GestureListener","手势向下滑动")
-                val subArray: Array<WordResource>? = todayPlanViewModel.currentWordResource.value?.let {
-                    todayPlanViewModel.wordResourceArray.copyOfRange(it, todayPlanViewModel.wordResourceArray.size)
+                val subArray: Array<WordResource>? = currentWordResource.value?.let {
+                    wordResourceArray.copyOfRange(it, wordResourceArray.size)
                 }
                 val gson = Gson()
                 val json = gson.toJson(subArray)
@@ -84,9 +142,9 @@ class ZhanActivity : AppCompatActivity() {
             }
             if ((event1.rawX - event2.rawX) > 100) {
                 Log.i("GestureListener","手势向右滑动")
-                if(todayPlanViewModel.currentWordResource.value!! < todayPlanViewModel.wordResourceArray.size - 1){
-                    val subArray: Array<WordResource>? = todayPlanViewModel.currentWordResource.value?.let {
-                        todayPlanViewModel.wordResourceArray.copyOfRange(it + 1, todayPlanViewModel.wordResourceArray.size)
+                if(currentWordResource.value!! < wordResourceArray.size - 1){
+                    val subArray: Array<WordResource>? = currentWordResource.value?.let {
+                        wordResourceArray.copyOfRange(it + 1, wordResourceArray.size)
                     }
                     val gson = Gson()
                     val json = gson.toJson(subArray)
