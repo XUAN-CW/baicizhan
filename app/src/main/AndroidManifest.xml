@@ -20,7 +20,7 @@
             android:name=".WordDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ZhanActivity"
+            android:name=".TodayPlanActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

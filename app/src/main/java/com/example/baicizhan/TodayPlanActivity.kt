@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import com.example.baicizhan.constaint.Constaints
 import com.example.baicizhan.dao.LearningRecordDao
 import com.example.baicizhan.dao.WordResourceDao
@@ -19,15 +18,12 @@ import com.example.baicizhan.database.BaicizhanDatabase
 import com.example.baicizhan.databinding.ActivityZhanBinding
 import com.example.baicizhan.entity.WordResource
 import com.example.baicizhan.player.Mp3Player
-import com.example.baicizhan.vm.TodayPlanViewModel
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.gson.Gson
-import org.apache.commons.lang3.ArrayUtils
-import java.io.Serializable
 import java.util.*
 
 
-class ZhanActivity : AppCompatActivity() {
+class TodayPlanActivity : AppCompatActivity() {
 
     var choiceWordResourceArray: MutableLiveData<Array<WordResource>> = MutableLiveData()
     var lastWordResource: MutableLiveData<WordResource> = MutableLiveData()
@@ -63,7 +59,7 @@ class ZhanActivity : AppCompatActivity() {
         learningRecordDao = BaicizhanDatabase.getInstance(application).learningRecordDao()
 
         mp3Player = Mp3Player(application)
-        
+
         wordResourceArray = wordResourceDao.getAllWordResource().shuffled().toTypedArray()
         currentWordResource = MutableLiveData(wordResourceArray.size - 1)
         if(wordResourceArray.isNotEmpty()){
@@ -148,7 +144,7 @@ class ZhanActivity : AppCompatActivity() {
                 }
                 val gson = Gson()
                 val json = gson.toJson(subArray)
-                val intent = Intent(this@ZhanActivity, WordDetailActivity::class.java)
+                val intent = Intent(this@TodayPlanActivity, WordDetailActivity::class.java)
                 intent.putExtra(Constaints.learnedWordList, json)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom)
@@ -162,7 +158,7 @@ class ZhanActivity : AppCompatActivity() {
                     }
                     val gson = Gson()
                     val json = gson.toJson(subArray)
-                    val intent = Intent(this@ZhanActivity, WordDetailActivity::class.java)
+                    val intent = Intent(this@TodayPlanActivity, WordDetailActivity::class.java)
                     intent.putExtra(Constaints.learnedWordList, json)
                     startActivity(intent)
                     overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
