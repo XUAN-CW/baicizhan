@@ -12,11 +12,13 @@ import com.example.baicizhan.entity.LearningRecord
 import com.example.baicizhan.util.BaicizhanPathUtil
 import com.example.baicizhan.util.IdUtil
 import com.example.baicizhan.util.WordResourceDirPathUtil
+import com.google.common.io.Files
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,7 +51,9 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun shareFile(file: File) {
-        val uri = FileProvider.getUriForFile(this, "com.example.baicizhan.fileprovider", file)
+        val backup = File(file.parent,LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss_")) + file.name)
+        Files.copy(file, backup)
+        val uri = FileProvider.getUriForFile(this, "com.example.baicizhan.fileprovider", backup)
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "application/octet-stream"
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
