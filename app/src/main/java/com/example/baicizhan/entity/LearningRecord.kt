@@ -12,9 +12,9 @@ data class LearningRecord (
     var updateTime : String,
     var event: String,
     /**
-     * 是否正确
+     * 是否回答正确
      */
-    var isRight: Int
+    var isCorrect: Int?
 ){
 
     enum class Event(private val event: String) {
