@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 
 class BaiciZhanTypeConverter {
     private val gson = Gson()
-    private val formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss")
+    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     @TypeConverter
     fun fromListString(value: List<String>?): String? {
         if(value == null){
