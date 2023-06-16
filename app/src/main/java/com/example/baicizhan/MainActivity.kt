@@ -30,8 +30,6 @@ import java.util.Random
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var downloadProgressTextView: TextView
-    private lateinit var downloadProgressMonitor: TextProgressMonitor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,31 +38,7 @@ class MainActivity : AppCompatActivity() {
 
 
         BaicizhanPathUtil.init(applicationContext)
-        downloadProgressTextView = findViewById(R.id.baicizhan_resource_root_dir)
-        downloadProgressTextView.text = BaicizhanPathUtil.getWordResourceRootDir().absolutePath
 
-        findViewById<Button>(R.id.pullGitRepository).setOnClickListener{
-            Thread { cloneRepository(BaicizhanPathUtil.cloneUrl,BaicizhanPathUtil.getGitRepositoryDir()) }.start()
-        }
-        findViewById<Button>(R.id.deleteGitRepository).setOnClickListener{
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            val dialog = builder.setTitle("Delete")
-                .setMessage("Are you sure you want to delete?")
-                .setPositiveButton(
-                    "Delete"
-                ) { dialog, which -> // Perform the deletion action here
-                    FileUtils.deleteDirectory(BaicizhanPathUtil.getGitRepositoryDir())
-                    Toast.makeText(
-                        this,
-                        "delete " + BaicizhanPathUtil.getGitRepositoryDir(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                .setNegativeButton("Cancel", null)
-                .show()
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
-        }
 
         findViewById<Button>(R.id.scanWordResource).setOnClickListener{ scanWordResourceDir() }
 
@@ -94,61 +68,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun cloneRepository(cloneUrl: String,localDir : File) {
-        downloadProgressMonitor = object : TextProgressMonitor() {
-            override fun onUpdate(taskName: String?, cmp: Int, totalWork: Int, pcnt: Int) {
-                super.onUpdate(taskName, cmp, totalWork, pcnt)
-                runOnUiThread {
-                        downloadProgressTextView.text =  "$taskName, $pcnt% ($cmp/$totalWork) "
-
-                }
-            }
-
-            override fun endTask() {
-                super.endTask()
-                runOnUiThread {
-                    downloadProgressTextView.text = "endTask!"
-                }
-
-            }
-        }
-
-        try {
-            if (checkGit(localDir)) {
-                // git reset --hard
-                val repositoryBuilder = FileRepositoryBuilder().setGitDir(localDir).build()
-                val latestCommitId: ObjectId = repositoryBuilder.resolve("HEAD")
-                val gitRepository = Git.open(localDir)
-                gitRepository.reset().setMode(ResetCommand.ResetType.HARD).setRef(latestCommitId.getName()).call();
-                // pull
-                val pullCommand: PullCommand = gitRepository
-                    .pull().
-                    setProgressMonitor(downloadProgressMonitor)
-                pullCommand.call()
-            }else{
-                Git.cloneRepository()
-                    .setURI(cloneUrl)
-                    .setDirectory(localDir)
-                    .setProgressMonitor(downloadProgressMonitor)
-                    .call()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-
-    private fun checkGit(gitRepositoryDir : File): Boolean {
-        return try {
-            val gitRepository = Git.open(gitRepositoryDir)
-            gitRepository != null
-        } catch (e: Exception) {
-            e.printStackTrace()
-            false
-        }
-    }
-
 
 
 }
