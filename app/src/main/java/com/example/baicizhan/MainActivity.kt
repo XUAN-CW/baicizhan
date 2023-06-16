@@ -1,15 +1,21 @@
 package com.example.baicizhan
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.example.baicizhan.database.BaicizhanDatabase
 import com.example.baicizhan.entity.LearningRecord
 import com.example.baicizhan.util.BaicizhanPathUtil
 import com.example.baicizhan.util.IdUtil
 import com.example.baicizhan.util.WordResourceDirPathUtil
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
 import java.time.LocalDateTime
 
 
@@ -31,7 +37,27 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, TodayPlanActivity::class.java)
             startActivity(intent)
         }
+
+
+        findViewById<Button>(R.id.shareDatabaseFile).setOnClickListener {
+            shareFile(BaicizhanPathUtil.getDatabaseFile())
+
+        }
+
     }
+
+
+
+    private fun shareFile(file: File) {
+        val uri = FileProvider.getUriForFile(this, "com.example.baicizhan.fileprovider", file)
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "application/octet-stream"
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        startActivity(Intent.createChooser(shareIntent, "Share File"))
+    }
+
+
 
 
     private fun scanWordResourceDir(){
