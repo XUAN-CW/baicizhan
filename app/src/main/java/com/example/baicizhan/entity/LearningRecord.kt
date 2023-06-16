@@ -14,7 +14,7 @@ data class LearningRecord (
     /**
      * 是否正确
      */
-    var right: Int
+    var isRight: Int
 ){
 
     enum class Event(private val event: String) {
