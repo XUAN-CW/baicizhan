@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-class BaiciZhanConverter {
+class BaiciZhanTypeConverter {
     private val gson = Gson()
     private val formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss")
     @TypeConverter
