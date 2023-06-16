@@ -26,7 +26,6 @@ import java.util.*
 
 
 class ZhanActivity : AppCompatActivity() {
-//    private lateinit var todayPlanViewModel: TodayPlanViewModel
 
     var choiceWordResourceArray: MutableLiveData<Array<WordResource>> = MutableLiveData()
     var lastWordResource: MutableLiveData<WordResource> = MutableLiveData()
@@ -46,12 +45,7 @@ class ZhanActivity : AppCompatActivity() {
         val activityZhanBinding: ActivityZhanBinding = DataBindingUtil.setContentView(this, R.layout.activity_zhan)
         activityZhanBinding.todayPlanViewModel = this
         activityZhanBinding.lifecycleOwner = this
-        gestureDetector = GestureDetector(this, MyGestureListener())
 
-
-
-        // 构造 todayPlanViewModel
-//        todayPlanViewModel = ViewModelProvider(this).get(TodayPlanViewModel::class.java)
         isComplete.observe(this) { isComplete ->
             if (isComplete) {
                 val dialogBuilder = AlertDialog.Builder(this)
