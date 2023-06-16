@@ -22,8 +22,7 @@ public class BaicizhanPathUtil {
     public static void init(Context context){
         if(wordResourceRootDir == null) {
             wordResourceRootDir = context.getExternalFilesDir("wordResourceRoot");
-            learningRecord = context.getExternalFilesDir("learningRecord");
-            databaseFile = new File(context.getExternalFilesDir("data"),"baicizhan.db");
+            databaseFile = new File(context.getExternalFilesDir("database"),"baicizhan.db");
         }
     }
 
