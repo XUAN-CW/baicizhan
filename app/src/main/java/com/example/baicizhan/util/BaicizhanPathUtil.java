@@ -1,6 +1,9 @@
 package com.example.baicizhan.util;
 
 import android.content.Context;
+import android.util.Log;
+
+import com.example.baicizhan.entity.LearningRecord;
 
 import java.io.File;
 
