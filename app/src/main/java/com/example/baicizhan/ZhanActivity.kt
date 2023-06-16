@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.baicizhan.constaint.Constaints
+import com.example.baicizhan.dao.LearningRecordDao
+import com.example.baicizhan.dao.WordResourceDao
 import com.example.baicizhan.database.BaicizhanDatabase
 import com.example.baicizhan.databinding.ActivityZhanBinding
 import com.example.baicizhan.entity.WordResource
@@ -32,20 +34,48 @@ class ZhanActivity : AppCompatActivity() {
     lateinit var wordResourceArray: Array<WordResource>
     var currentWordResource : MutableLiveData<Int> = MutableLiveData(0)
     var continuousCorrect : MutableLiveData<Int> = MutableLiveData(0)
-
     var isComplete : MutableLiveData<Boolean> = MutableLiveData(false)
 
     private lateinit var mp3Player : Mp3Player
+
+    private lateinit var wordResourceDao: WordResourceDao
+    private lateinit var learningRecordDao: LearningRecordDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_zhan)
 
+        initData()
         // 绑定
         val activityZhanBinding: ActivityZhanBinding = DataBindingUtil.setContentView(this, R.layout.activity_zhan)
         activityZhanBinding.todayPlanViewModel = this
         activityZhanBinding.lifecycleOwner = this
 
+        setObserve()
+
+        gestureDetector = GestureDetector(this, MyGestureListener())
+
+
+    }
+
+    private fun initData(){
+        wordResourceDao = BaicizhanDatabase.getInstance(application).wordResourceDao()
+        learningRecordDao = BaicizhanDatabase.getInstance(application).learningRecordDao()
+
+        mp3Player = Mp3Player(application)
+        
+        wordResourceArray = wordResourceDao.getAllWordResource().shuffled().toTypedArray()
+        currentWordResource = MutableLiveData(wordResourceArray.size - 1)
+        if(wordResourceArray.isNotEmpty()){
+            currentWordResource.observeForever {value ->
+                mp3Player.playMp3(Uri.parse(wordResourceArray[value].usSpeechFile))
+                setChoiceWordResourceListCurrentWordResource()
+            }
+        }
+    }
+
+
+    private fun setObserve(){
         isComplete.observe(this) { isComplete ->
             if (isComplete) {
                 val dialogBuilder = AlertDialog.Builder(this)
@@ -57,16 +87,6 @@ class ZhanActivity : AppCompatActivity() {
                         startActivity(intent)
                     }.show()
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN)
-            }
-        }
-
-        mp3Player = Mp3Player(application)
-        wordResourceArray = BaicizhanDatabase.getInstance(application).wordResourceDao().getAllWordResource().shuffled().toTypedArray()
-        currentWordResource = MutableLiveData(wordResourceArray.size - 1)
-        if(wordResourceArray.isNotEmpty()){
-            currentWordResource.observeForever {value ->
-                mp3Player.playMp3(Uri.parse(wordResourceArray[value].usSpeechFile))
-                setChoiceWordResourceListCurrentWordResource()
             }
         }
     }
