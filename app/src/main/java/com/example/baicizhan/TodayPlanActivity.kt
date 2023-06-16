@@ -30,7 +30,6 @@ class TodayPlanActivity : AppCompatActivity() {
     lateinit var wordResourceArray: Array<WordResource>
     var currentWordResource : MutableLiveData<Int> = MutableLiveData(0)
     var continuousCorrect : MutableLiveData<Int> = MutableLiveData(0)
-//    var isComplete : MutableLiveData<Boolean> = MutableLiveData(false)
 
     private lateinit var mp3Player : Mp3Player
 
@@ -47,7 +46,6 @@ class TodayPlanActivity : AppCompatActivity() {
         activityZhanBinding.todayPlanViewModel = this
         activityZhanBinding.lifecycleOwner = this
 
-        setObserve()
 
         gestureDetector = GestureDetector(this, MyGestureListener())
 
@@ -70,22 +68,6 @@ class TodayPlanActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun setObserve(){
-//        isComplete.observe(this) { isComplete ->
-//            if (isComplete) {
-//                val dialogBuilder = AlertDialog.Builder(this)
-//                val dialog = dialogBuilder.setMessage("全部完成！"+ (continuousCorrect.value?.plus(1)) +"连击！")
-//                    .setCancelable(false)
-//                    .setPositiveButton("Yes") { dialog, id ->
-//                        // User clicked Yes button
-//                        val intent = Intent(this, MainActivity::class.java)
-//                        startActivity(intent)
-//                    }.show()
-//                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN)
-//            }
-//        }
-    }
 
 
     fun forcePlayWord(usSpeechFile: String){
