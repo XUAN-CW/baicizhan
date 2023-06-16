@@ -18,7 +18,7 @@ data class LearningRecord (
 ){
 
     enum class Event(private val event: String) {
-        LOOK_AT_THE_PICTURE_AND_CHOOSE_THE_WORDS("看图选词");
+        LOOK_AT_THE_PICTURE_AND_CHOOSE_THE_WORD("看图选词");
         override fun toString(): String {
             return event
         }
