@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.widget.VideoView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -22,6 +23,7 @@ import com.example.baicizhan.player.Mp3Player
 import com.example.baicizhan.util.IdUtil
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.gson.Gson
+import java.io.File
 import java.time.LocalDateTime
 import java.util.*
 
@@ -53,6 +55,32 @@ class TodayPlanActivity : AppCompatActivity() {
         gestureDetector = GestureDetector(this, MyGestureListener())
 
 
+
+        val videoView = findViewById<VideoView>(R.id.videoView)
+
+        val video = File("/storage/emulated/0/Android/data/com.example.baicizhan/files/wordResourceRoot/final-1.mp4")
+
+//        val mediaController = MediaController(this)
+//        mediaController.setAnchorView(videoView)
+//        videoView.setMediaController(mediaController)
+//        videoView.setVideoURI(Uri.parse(video.absolutePath))
+//        videoView.requestFocus()
+
+
+        videoView.setVideoURI(Uri.parse(video.absolutePath))
+
+        // Remove the sound
+        videoView.setOnPreparedListener { mediaPlayer ->
+            mediaPlayer.setVolume(0f, 0f)
+        }
+
+        // Remove the media controller bar
+        videoView.setMediaController(null)
+
+        // Loop the video
+        videoView.setOnCompletionListener { videoView.start() }
+
+        videoView.start()
     }
 
     private fun initData(){

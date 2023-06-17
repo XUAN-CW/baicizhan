@@ -120,16 +120,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/choice_a"
+
+                        <VideoView
+                            android:id="@+id/videoView"
                             android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/a"
-                            app:media="@{todayPlanViewModel.choiceWordResourceArray[0].image}"
-                            app:word="@{todayPlanViewModel.choiceWordResourceArray[0].word}"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:keepScreenOn="true"
                             android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[0].word)}"
-                            app:layout_constraintDimensionRatio="16:9" />
+
+                        app:layout_constraintDimensionRatio="16:9"/>
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/choice_a"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="0px"-->
+<!--                            android:adjustViewBounds="true"-->
+<!--                            android:src="@drawable/a"-->
+<!--                            app:media="@{todayPlanViewModel.choiceWordResourceArray[0].image}"-->
+<!--                            app:word="@{todayPlanViewModel.choiceWordResourceArray[0].word}"-->
+<!--                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[0].word)}"-->
+<!--                            app:layout_constraintDimensionRatio="16:9" />-->
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
