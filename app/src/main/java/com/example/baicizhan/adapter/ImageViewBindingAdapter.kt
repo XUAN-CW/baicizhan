@@ -34,7 +34,7 @@ class ImageViewBindingAdapter(var context: Context) {
                         .into(imageView)
                     return
                 }
-                imageView.visibility = View.GONE
+                imageView.visibility = View.INVISIBLE
                 return
             }
         }
@@ -65,7 +65,7 @@ class ImageViewBindingAdapter(var context: Context) {
 
                     videoView.start()
                 }else{
-                    videoView.visibility = View.GONE
+                    videoView.visibility = View.INVISIBLE
                 }
 
             }

@@ -33,7 +33,7 @@
 
             <VideoView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0px"
                 android:adjustViewBounds="true"
 
                 android:onClick="@{() -> todayPlan.choice(wordResource.word)}"
@@ -43,7 +43,8 @@
                 app:layout_constraintDimensionRatio="16:9"
                 app:videoUrl="@{wordResource.image}"
 
-                android:keepScreenOn="true" />
+                android:keepScreenOn="true"
+                tools:ignore="MissingConstraints" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
