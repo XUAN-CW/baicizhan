@@ -116,41 +116,13 @@
                     tools:context=".TodayPlanActivity"
                     tools:ignore="MissingConstraints"
                     android:orientation="vertical">
-                    <androidx.constraintlayout.widget.ConstraintLayout
+
+
+                    <include
+                        app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[0]}"
+                        layout="@layout/item_choice_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
-                        <VideoView
-                            android:id="@+id/videoView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:keepScreenOn="true"
-                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[0].word)}"
-
-                        app:layout_constraintDimensionRatio="16:9"/>
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/choice_a"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="0px"-->
-<!--                            android:adjustViewBounds="true"-->
-<!--                            android:src="@drawable/a"-->
-<!--                            app:media="@{todayPlanViewModel.choiceWordResourceArray[0].image}"-->
-<!--                            app:word="@{todayPlanViewModel.choiceWordResourceArray[0].word}"-->
-<!--                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[0].word)}"-->
-<!--                            app:layout_constraintDimensionRatio="16:9" />-->
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/short_mean_a"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:text='@{todayPlanViewModel.choiceWordResourceArray[0].shortMean}'
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -160,30 +132,12 @@
                     tools:context=".TodayPlanActivity"
                     tools:ignore="MissingConstraints"
                     android:orientation="vertical">
-                    <androidx.constraintlayout.widget.ConstraintLayout
+
+                    <include
+                        app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[1]}"
+                        layout="@layout/item_choice_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/choice_b"
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/clock"
-                            app:media="@{todayPlanViewModel.choiceWordResourceArray[1].image}"
-                            app:word="@{todayPlanViewModel.choiceWordResourceArray[1].word}"
-                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[1].word)}"
-                            app:layout_constraintDimensionRatio="16:9" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/short_mean_b"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:text='@{todayPlanViewModel.choiceWordResourceArray[1].shortMean}'
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -199,30 +153,12 @@
                     tools:context=".TodayPlanActivity"
                     tools:ignore="MissingConstraints"
                     android:orientation="vertical">
-                    <androidx.constraintlayout.widget.ConstraintLayout
+
+                    <include
+                        app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[2]}"
+                        layout="@layout/item_choice_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/choice_c"
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/c"
-                            app:media="@{todayPlanViewModel.choiceWordResourceArray[2].image}"
-                            app:word="@{todayPlanViewModel.choiceWordResourceArray[2].word}"
-                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[2].word)}"
-                            app:layout_constraintDimensionRatio="16:9" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/short_mean_c"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:text='@{todayPlanViewModel.choiceWordResourceArray[2].shortMean}'
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -232,30 +168,12 @@
                     tools:context=".TodayPlanActivity"
                     tools:ignore="MissingConstraints"
                     android:orientation="vertical">
-                    <androidx.constraintlayout.widget.ConstraintLayout
+
+                    <include
+                        app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[3]}"
+                        layout="@layout/item_choice_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/choice_d"
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/d"
-                            app:media="@{todayPlanViewModel.choiceWordResourceArray[3].image}"
-                            app:word="@{todayPlanViewModel.choiceWordResourceArray[3].word}"
-                            android:onClick="@{() -> todayPlanViewModel.choice(todayPlanViewModel.choiceWordResourceArray[3].word)}"
-                            app:layout_constraintDimensionRatio="16:9" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/short_mean_d"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:text='@{todayPlanViewModel.choiceWordResourceArray[3].shortMean}'
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

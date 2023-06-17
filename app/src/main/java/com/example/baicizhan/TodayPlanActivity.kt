@@ -56,31 +56,31 @@ class TodayPlanActivity : AppCompatActivity() {
 
 
 
-        val videoView = findViewById<VideoView>(R.id.videoView)
-
-        val video = File("/storage/emulated/0/Android/data/com.example.baicizhan/files/wordResourceRoot/final-1.mp4")
-
-//        val mediaController = MediaController(this)
-//        mediaController.setAnchorView(videoView)
-//        videoView.setMediaController(mediaController)
+//        val videoView = findViewById<VideoView>(R.id.videoView)
+//
+//        val video = File("/storage/emulated/0/Android/data/com.example.baicizhan/files/wordResourceRoot/final-1.mp4")
+//
+////        val mediaController = MediaController(this)
+////        mediaController.setAnchorView(videoView)
+////        videoView.setMediaController(mediaController)
+////        videoView.setVideoURI(Uri.parse(video.absolutePath))
+////        videoView.requestFocus()
+//
+//
 //        videoView.setVideoURI(Uri.parse(video.absolutePath))
-//        videoView.requestFocus()
-
-
-        videoView.setVideoURI(Uri.parse(video.absolutePath))
-
-        // Remove the sound
-        videoView.setOnPreparedListener { mediaPlayer ->
-            mediaPlayer.setVolume(0f, 0f)
-        }
-
-        // Remove the media controller bar
-        videoView.setMediaController(null)
-
-        // Loop the video
-        videoView.setOnCompletionListener { videoView.start() }
-
-        videoView.start()
+//
+//        // Remove the sound
+//        videoView.setOnPreparedListener { mediaPlayer ->
+//            mediaPlayer.setVolume(0f, 0f)
+//        }
+//
+//        // Remove the media controller bar
+//        videoView.setMediaController(null)
+//
+//        // Loop the video
+//        videoView.setOnCompletionListener { videoView.start() }
+//
+//        videoView.start()
     }
 
     private fun initData(){
