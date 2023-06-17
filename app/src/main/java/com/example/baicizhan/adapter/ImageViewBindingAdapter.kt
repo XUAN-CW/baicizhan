@@ -12,7 +12,7 @@ import java.util.Locale
 class ImageViewBindingAdapter(var context: Context) {
     companion object {
         @JvmStatic
-        @BindingAdapter("media")
+        @BindingAdapter("imageUrl")
         fun setImage(imageView: ImageView, url: String) {
             if (!TextUtils.isEmpty(url)) {
                 if (url.lowercase(Locale.getDefault())

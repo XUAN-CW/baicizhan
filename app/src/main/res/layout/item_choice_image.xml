@@ -27,7 +27,7 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/a"
                 app:layout_constraintDimensionRatio="16:9"
-                app:media="@{wordResource.image}"
+                app:imageUrl="@{wordResource.image}"
                 android:onClick="@{() -> todayPlan.choice(wordResource.word)}"
                 tools:ignore="MissingConstraints" />
 
