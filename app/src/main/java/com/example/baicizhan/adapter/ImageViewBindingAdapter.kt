@@ -17,7 +17,6 @@ class ImageViewBindingAdapter(var context: Context) {
         @BindingAdapter("imageUrl")
         fun setImage(imageView: ImageView, url: String) {
             if (!TextUtils.isEmpty(url)) {
-                imageView.visibility = View.VISIBLE
                 if (url.lowercase(Locale.getDefault())
                         .endsWith(".jpg") || url.lowercase(Locale.getDefault())
                         .endsWith(".jpeg") || url.lowercase(
@@ -25,50 +24,52 @@ class ImageViewBindingAdapter(var context: Context) {
                     ).endsWith(".png")
                 ) {
                     imageView.setImageURI(Uri.fromFile(File(url)))
-                    return
                 }
                 if (url.lowercase(Locale.getDefault()).endsWith(".gif")) {
                     Glide.with(imageView.context)
                         .asGif()
                         .load(File(url))
                         .into(imageView)
-                    return
                 }
-                imageView.visibility = View.INVISIBLE
-                return
+                if (url.lowercase(Locale.getDefault()).endsWith(".mp4")) {
+                    Glide
+                        .with(imageView.context)
+                        .load(Uri.fromFile(File(url)))
+                        .into(imageView)
+                }
             }
         }
 
-        @JvmStatic
-        @BindingAdapter("videoUrl")
-        fun setImage(videoView: VideoView, url: String) {
-            if (!TextUtils.isEmpty(url)) {
-                videoView.visibility = View.VISIBLE
-
-                if(url.lowercase(Locale.getDefault()).endsWith(".mp4")){
-
-                    val video = File(url)
-
-
-                    videoView.setVideoURI(Uri.parse(video.absolutePath))
-
-                    // Remove the sound
-                    videoView.setOnPreparedListener { mediaPlayer ->
-                        mediaPlayer.setVolume(0f, 0f)
-                    }
-
-                    // Remove the media controller bar
-                    videoView.setMediaController(null)
-
-                    // Loop the video
-                    videoView.setOnCompletionListener { videoView.start() }
-
-                    videoView.start()
-                }else{
-                    videoView.visibility = View.INVISIBLE
-                }
-
-            }
-        }
+//        @JvmStatic
+//        @BindingAdapter("videoUrl")
+//        fun setImage(videoView: VideoView, url: String) {
+//            if (!TextUtils.isEmpty(url)) {
+//                videoView.visibility = View.VISIBLE
+//
+//                if(url.lowercase(Locale.getDefault()).endsWith(".mp4")){
+//
+//                    val video = File(url)
+//
+//
+//                    videoView.setVideoURI(Uri.parse(video.absolutePath))
+//
+//                    // Remove the sound
+//                    videoView.setOnPreparedListener { mediaPlayer ->
+//                        mediaPlayer.setVolume(0f, 0f)
+//                    }
+//
+//                    // Remove the media controller bar
+//                    videoView.setMediaController(null)
+//
+//                    // Loop the video
+//                    videoView.setOnCompletionListener { videoView.start() }
+//
+//                    videoView.start()
+//                }else{
+//                    videoView.visibility = View.INVISIBLE
+//                }
+//
+//            }
+//        }
     }
 }

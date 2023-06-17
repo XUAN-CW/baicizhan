@@ -31,20 +31,20 @@
                 app:layout_constraintDimensionRatio="16:9"
                 tools:ignore="MissingConstraints" />
 
-            <VideoView
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:adjustViewBounds="true"
+<!--            <VideoView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0px"-->
+<!--                android:adjustViewBounds="true"-->
 
-                android:onClick="@{() -> todayPlan.choice(wordResource.word)}"
+<!--                android:onClick="@{() -> todayPlan.choice(wordResource.word)}"-->
 
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="16:9"
-                app:videoUrl="@{wordResource.image}"
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintDimensionRatio="16:9"-->
+<!--                app:videoUrl="@{wordResource.image}"-->
 
-                android:keepScreenOn="true"
-                tools:ignore="MissingConstraints" />
+<!--                android:keepScreenOn="true"-->
+<!--                tools:ignore="MissingConstraints" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
