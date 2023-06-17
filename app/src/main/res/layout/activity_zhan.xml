@@ -108,77 +108,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <include
+                    android:layout_weight="1"
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                    app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[0]}"
+                    app:todayPlan="@{todayPlanViewModel}"
+                    layout="@layout/item_choice_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/item_choice_image"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    tools:context=".TodayPlanActivity"
-                    tools:ignore="MissingConstraints"
-                    android:orientation="vertical">
-
-
-                    <include
-                        app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[0]}"
-                        app:todayPlan="@{todayPlanViewModel}"
-                        layout="@layout/item_choice_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    tools:context=".TodayPlanActivity"
-                    tools:ignore="MissingConstraints"
-                    android:orientation="vertical">
-
-                    <include
-                        app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[1]}"
-                        app:todayPlan="@{todayPlanViewModel}"
-                        layout="@layout/item_choice_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                    app:todayPlan="@{todayPlanViewModel}"
+                    app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[1]}" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <include
+                    android:layout_weight="1"
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                    app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[2]}"
+                    app:todayPlan="@{todayPlanViewModel}"
+                    layout="@layout/item_choice_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/item_choice_image"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    tools:context=".TodayPlanActivity"
-                    tools:ignore="MissingConstraints"
-                    android:orientation="vertical">
-
-                    <include
-                        app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[2]}"
-                        app:todayPlan="@{todayPlanViewModel}"
-                        layout="@layout/item_choice_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    tools:context=".TodayPlanActivity"
-                    tools:ignore="MissingConstraints"
-                    android:orientation="vertical">
-
-                    <include
-                        app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[3]}"
-                        app:todayPlan="@{todayPlanViewModel}"
-                        layout="@layout/item_choice_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                    app:todayPlan="@{todayPlanViewModel}"
+                    app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[3]}" />
             </LinearLayout>
         </LinearLayout>
 
