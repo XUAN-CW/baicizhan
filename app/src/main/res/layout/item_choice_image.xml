@@ -7,6 +7,9 @@
         <variable
             name="wordResource"
             type="com.example.baicizhan.entity.WordResource" />
+        <variable
+            name="todayPlan"
+            type="com.example.baicizhan.TodayPlanActivity" />
     </data>
 
     <LinearLayout
@@ -19,7 +22,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/choice_b"
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:adjustViewBounds="true"
@@ -27,12 +29,12 @@
                 app:layout_constraintDimensionRatio="16:9"
                 app:media="@{wordResource.image}"
                 app:word="@{wordResource.word}"
+                android:onClick="@{() -> todayPlan.choice(wordResource.word)}"
                 tools:ignore="MissingConstraints" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
-            android:id="@+id/short_mean_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
