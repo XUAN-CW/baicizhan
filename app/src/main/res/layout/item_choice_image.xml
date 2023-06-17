@@ -31,6 +31,19 @@
                 app:layout_constraintDimensionRatio="16:9"
                 tools:ignore="MissingConstraints" />
 
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> todayPlan.choice(wordResource.word)}"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="16:9"
+                app:videoUrl="@{wordResource.image}"
+
+                android:keepScreenOn="true" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
