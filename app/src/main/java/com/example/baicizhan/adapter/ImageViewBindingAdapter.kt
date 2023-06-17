@@ -38,9 +38,5 @@ class ImageViewBindingAdapter(var context: Context) {
             }
         }
 
-        @JvmStatic
-        @BindingAdapter("word")
-        fun setWord(imageView: ImageView?, word: String?) {
-        }
     }
 }
