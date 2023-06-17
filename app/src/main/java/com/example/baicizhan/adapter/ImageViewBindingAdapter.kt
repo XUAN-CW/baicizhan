@@ -17,6 +17,7 @@ class ImageViewBindingAdapter(var context: Context) {
         @BindingAdapter("imageUrl")
         fun setImage(imageView: ImageView, url: String) {
             if (!TextUtils.isEmpty(url)) {
+                imageView.visibility = View.VISIBLE
                 if (url.lowercase(Locale.getDefault())
                         .endsWith(".jpg") || url.lowercase(Locale.getDefault())
                         .endsWith(".jpeg") || url.lowercase(
@@ -42,6 +43,7 @@ class ImageViewBindingAdapter(var context: Context) {
         @BindingAdapter("videoUrl")
         fun setImage(videoView: VideoView, url: String) {
             if (!TextUtils.isEmpty(url)) {
+                videoView.visibility = View.VISIBLE
 
                 if(url.lowercase(Locale.getDefault()).endsWith(".mp4")){
 
