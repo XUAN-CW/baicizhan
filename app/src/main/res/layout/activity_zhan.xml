@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="todayPlanViewModel"
             type="com.example.baicizhan.TodayPlanActivity" />
@@ -40,8 +41,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
 
                 <TextView
                     android:id="@+id/just_learned_word"
@@ -61,9 +62,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -76,9 +77,9 @@
                     android:id="@+id/current_word"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30sp"
+                    android:text="@{todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].getWordOnSpace()}"
                     android:textColor="@color/black"
-                    android:text="@{todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].getWordOnSpace()}" />
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,15 +88,15 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/current_word_mean"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:paddingLeft="20dp"-->
-<!--                    android:paddingRight="20dp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:text="@{todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].shortMean}" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/current_word_mean"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:paddingLeft="20dp"-->
+                <!--                    android:paddingRight="20dp"-->
+                <!--                    android:layout_gravity="center"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:text="@{todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].shortMean}" />-->
             </LinearLayout>
         </LinearLayout>
 
@@ -108,14 +109,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <include
-                    android:layout_weight="1"
 
-                    app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[0]}"
-                    app:todayPlan="@{todayPlanViewModel}"
+                <include
                     layout="@layout/item_choice_image"
+
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:todayPlan="@{todayPlanViewModel}"
+                    app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[0]}" />
 
                 <include
                     layout="@layout/item_choice_image"
@@ -130,14 +132,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <include
-                    android:layout_weight="1"
 
-                    app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[2]}"
-                    app:todayPlan="@{todayPlanViewModel}"
+                <include
                     layout="@layout/item_choice_image"
+
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:todayPlan="@{todayPlanViewModel}"
+                    app:wordResource="@{todayPlanViewModel.choiceWordResourceArray[2]}" />
 
                 <include
                     layout="@layout/item_choice_image"
@@ -168,8 +171,8 @@
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:stateListAnimator="@null"
                 android:onClick="@{() -> todayPlanViewModel.forcePlayWord(todayPlanViewModel.wordResourceArray[todayPlanViewModel.currentWordResource].usSpeechFile)}"
+                android:stateListAnimator="@null"
                 android:text="发音" />
         </LinearLayout>
 
