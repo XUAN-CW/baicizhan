@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    app:media="@{wordResource.image}"
+                    app:imageUrl="@{wordResource.image}"
                     android:src="@drawable/c" />
             </LinearLayout>
         </ScrollView>
