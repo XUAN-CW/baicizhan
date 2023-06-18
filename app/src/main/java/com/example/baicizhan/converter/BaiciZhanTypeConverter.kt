@@ -1,6 +1,7 @@
 package com.example.baicizhan.converter
 
 import androidx.room.TypeConverter
+import com.example.baicizhan.constaint.Constaints
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDateTime
@@ -9,7 +10,7 @@ import java.time.format.DateTimeFormatter
 
 class BaiciZhanTypeConverter {
     private val gson = Gson()
-    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    private val formatter = DateTimeFormatter.ofPattern(Constaints.timeFormat)
     @TypeConverter
     fun fromListString(value: List<String>?): String? {
         if(value == null){

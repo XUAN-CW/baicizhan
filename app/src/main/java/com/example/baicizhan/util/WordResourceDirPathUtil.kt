@@ -60,7 +60,7 @@ object WordResourceDirPathUtil {
         val wordResourceDirList = getAllWordResourceDirByScanWordResourceRootDir(wordResourceRootDir)
         val wordResourceList = ArrayList<WordResource>()
         for (wordResourceDir in wordResourceDirList) {
-            val wordResource : WordResource = Gson().fromJson(getWordDataFile(wordResourceDir).reader(), WordResource::class.java)
+            val wordResource : WordResource = JsonUtils.getGson().fromJson(getWordDataFile(wordResourceDir).reader(), WordResource::class.java)
             wordResource.wordResourceDir = wordResourceDir.absolutePath
             wordResource.usSpeechFile = getUsSpeechMp3File(wordResourceDir).absolutePath
             val mediaList = getMediaList(wordResourceDir)
