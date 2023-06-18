@@ -3,6 +3,7 @@ package com.example.baicizhan.adapter
 import android.content.Context
 import android.net.Uri
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.VideoView
@@ -16,6 +17,8 @@ class ImageViewBindingAdapter(var context: Context) {
         @JvmStatic
         @BindingAdapter("imageUrl")
         fun setImage(imageView: ImageView, url: String) {
+            Log.i("imageUrl",url)
+
             if (!TextUtils.isEmpty(url)) {
                 if (url.lowercase(Locale.getDefault())
                         .endsWith(".jpg") || url.lowercase(Locale.getDefault())
@@ -25,15 +28,17 @@ class ImageViewBindingAdapter(var context: Context) {
                 ) {
                     imageView.setImageURI(Uri.fromFile(File(url)))
                 }
-                if (url.lowercase(Locale.getDefault()).endsWith(".gif")) {
+                if (url.lowercase().endsWith(".gif")) {
                     Glide.with(imageView.context)
                         .asGif()
                         .load(File(url))
                         .into(imageView)
                 }
-                if (url.lowercase(Locale.getDefault()).endsWith(".mp4")) {
+                if (url.lowercase().endsWith(".mp4")) {
+                    Log.i("imageUrl","mp4 " + url)
                     Glide
                         .with(imageView.context)
+                        .asBitmap()
                         .load(Uri.fromFile(File(url)))
                         .into(imageView)
                 }
