@@ -17,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class NewWordUtil {
@@ -95,6 +97,12 @@ public class NewWordUtil {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         YoudaoWord youdaoWord = gson.fromJson(json, YoudaoWord.class);
         WordResouce wordResouce = new WordResouce();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+
+        wordResouce.setCreateTime(formatter.format(LocalDateTime.now()));
+        wordResouce.setUpdateTime(formatter.format(LocalDateTime.now()));
+
         wordResouce.setWord(wordDir.getName());
         try {
             wordResouce.setUsphone(youdaoWord.getEc().getWord().get(0).getUsphone());
