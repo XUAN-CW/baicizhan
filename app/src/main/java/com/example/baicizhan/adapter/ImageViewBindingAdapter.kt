@@ -1,6 +1,7 @@
 package com.example.baicizhan.adapter
 
 import android.content.Context
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.text.TextUtils
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import java.io.File
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class ImageViewBindingAdapter(var context: Context) {
     companion object {
@@ -36,11 +38,25 @@ class ImageViewBindingAdapter(var context: Context) {
                 }
                 if (url.lowercase().endsWith(".mp4")) {
                     Log.i("imageUrl","mp4 " + url)
-                    Glide
-                        .with(imageView.context)
-                        .asBitmap()
-                        .load(Uri.fromFile(File(url)))
-                        .into(imageView)
+                    val retriever = MediaMetadataRetriever()
+                    retriever.setDataSource(url)
+                    val durationString = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                    retriever.release()
+                    val duration = durationString?.toLong()
+                    if (duration != null) {
+                        Glide.with(imageView.context)
+                            .asBitmap()
+                            .load(Uri.fromFile(File(url)))
+                            .frame(TimeUnit.MILLISECONDS.toMicros(duration / 2)) // Set the time position for the middle frame
+                            .into(imageView)
+                    }else{
+                        Glide
+                            .with(imageView.context)
+                            .asBitmap()
+                            .load(Uri.fromFile(File(url)))
+                            .into(imageView)
+                    }
+
                 }
             }
         }
