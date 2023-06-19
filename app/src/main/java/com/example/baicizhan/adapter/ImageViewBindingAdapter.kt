@@ -47,7 +47,7 @@ class ImageViewBindingAdapter(var context: Context) {
                         Glide.with(imageView.context)
                             .asBitmap()
                             .load(Uri.fromFile(File(url)))
-                            .frame(TimeUnit.MILLISECONDS.toMicros(duration / 3))
+                            .frame(TimeUnit.MILLISECONDS.toMicros(duration / 4))
                             .into(imageView)
                     }else{
                         Glide
