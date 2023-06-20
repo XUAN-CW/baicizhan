@@ -30,11 +30,7 @@ object WordResourceDirPathUtil {
             return ArrayList()
         }
         val wordResourceArray = wordResourceDir.listFiles { file: File ->
-            ((file.isFile
-                    && file.name.endsWith(".jpg")) || (file.name.endsWith(".jpeg")
-                    || file.name.endsWith(".png"))
-                    || file.name.endsWith(".gif")
-                    || file.name.endsWith(".mp4"))
+            (MediaUtil.isMedia(file.absolutePath))
         }
         return if (ArrayUtils.isEmpty(wordResourceArray)) {
             ArrayList()
