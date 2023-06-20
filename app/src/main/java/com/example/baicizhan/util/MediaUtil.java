@@ -3,7 +3,7 @@ package com.example.baicizhan.util;
 import java.io.File;
 
 public class MediaUtil {
-    public static boolean isImage(String url){
+    public static Boolean isImage(String url){
         File file = new File(url);
         return file.isFile()
                 && (file.getName().toLowerCase().endsWith(".jpg")
@@ -12,13 +12,13 @@ public class MediaUtil {
                 || file.getName().toLowerCase().endsWith(".gif"));
     }
 
-    public static boolean isVideo(String url){
+    public static Boolean isVideo(String url){
         File file = new File(url);
         return file.isFile()
                 && (file.getName().toLowerCase().endsWith(".mp4"));
     }
 
-    public static boolean isMedia(String url){
+    public static Boolean isMedia(String url){
         return isVideo(url) || isImage(url);
     }
 }
