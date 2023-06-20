@@ -6,6 +6,10 @@
         <variable
             name="wordResource"
             type="com.example.baicizhan.entity.WordResource" />
+
+        <import type="com.example.baicizhan.util.MediaUtil" />
+
+        <import type="android.view.View" />
     </data>
 
     <RelativeLayout
@@ -64,11 +68,19 @@
                     android:textColor="@color/black"
                     android:text="@{wordResource.meanListString}" />
 
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="500px"
+                    android:adjustViewBounds="true"
+                    videoUrl="@{wordResource.image}"/>
+
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     app:imageUrl="@{wordResource.image}"
+                    android:visibility='@{MediaUtil.isImage(wordResource.image) ? View.VISIBLE : View.GONE }'
                     android:src="@drawable/c" />
             </LinearLayout>
         </ScrollView>
